@@ -119,8 +119,8 @@
             <id>dev-linux</id>
             <activation>
                 <os>
-                    <name>Manjaro Linux</name>
-                    <family>Linux</family>
+                    <name>linux</name>
+                    <arch>amd64</arch>
                 </os>
             </activation>
             <build>

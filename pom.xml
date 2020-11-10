@@ -177,8 +177,8 @@
             <id>deploy-linux</id>
             <activation>
                 <os>
-                    <name>Rasbian</name>
-                    <family>Linux</family>
+                    <name>linux</name>
+                    <arch>arm</arch>
                 </os>
             </activation>
         </profile>

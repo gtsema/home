@@ -16,12 +16,25 @@ pipeline {
     stages {
         stage("First step") {
             steps {
-                sh 'hostname'
+                sh 'vcgencmd measure_temp'
             }
         }
         stage("Second step") {
             steps {
-                sh 'vcgencmd measure_temp'
+                sh 'mvn clean install'
+            }
+        }
+        stage("Third step") {
+            steps {
+                sh(returnStdout: false, script: "CURL_RESPONSE=\$(curl -v -u $TOMCAT_USER:$TOMCAT_PASSWORD -T $WAR_PATH \"http://$TOMCAT_HOST:$TOMCAT_PORT/manager/text/deploy?path=/$CONTEX_NAME&update=true\")    \n" +
+                                        "\n" +
+                                        "if [[ $CURL_RESPONSE == *\"FAIL\"* ]]; then\n" +
+                                        "  echo \"war deployment failed\"\n" +
+                                        "  exit 1\n" +
+                                        "else    \n" +
+                                        "  echo \"war deployed successfully \"\n" +
+                                        "  exit 0\n" +
+                                        "fi")
             }
         }
     }

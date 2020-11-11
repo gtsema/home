@@ -22,7 +22,7 @@
         <maven.tomcat7.port>8888</maven.tomcat7.port>
         <maven.tomcat7.path>/</maven.tomcat7.path>
 
-        <maven.exec.version>1.6.0</maven.exec.version>
+        <maven.exec.version>3.0.0</maven.exec.version>
 
         <finalName>home</finalName>
     </properties>
@@ -119,8 +119,8 @@
             <id>dev-linux</id>
             <activation>
                 <os>
-                    <name>Manjaro Linux</name>
-                    <family>Linux</family>
+                    <name>linux</name>
+                    <arch>amd64</arch>
                 </os>
             </activation>
             <build>
@@ -165,7 +165,8 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <executable>startBrowser.sh</executable>
+                            <executable>bash</executable>
+                            <arguments>startBrowser.sh</arguments>
                         </configuration>
                     </plugin>
                 </plugins>

@@ -21,12 +21,12 @@ pipeline {
         }
         stage("Second step") {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean package'
             }
         }
         stage("Third step") {
             steps {
-                sh(returnStdout: false, script: "CURL_RESPONSE=\$(curl -v -u $TOMCAT_USER:$TOMCAT_PASSWORD -T $WAR_PATH \"http://$TOMCAT_HOST:$TOMCAT_PORT/manager/text/deploy?path=/$CONTEX_NAME&update=true\")    \n" +
+                sh(returnStdout: false, script: "CURL_RESPONSE=\$(curl -v -u $war-deployer:$jenkins-tomcat-deploy -T $WAR_PATH \"http://$TOMCAT_HOST:$TOMCAT_PORT/manager/text/deploy?path=/$CONTEX_NAME&update=true\")    \n" +
                                         "\n" +
                                         "if [[ $CURL_RESPONSE == *\"FAIL\"* ]]; then\n" +
                                         "  echo \"war deployment failed\"\n" +

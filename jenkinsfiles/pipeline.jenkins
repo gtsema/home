@@ -30,8 +30,8 @@ pipeline {
                 CONTEX_NAME = 'home'
             }
             steps {
-                sh 'chmod +x -R ${env.WORKSPACE}'
-                sh 'jenkinsfiles/deploy.sh';
+                sh "chmod +x -R ${env.WORKSPACE}"
+                sh("jenkinsfiles/deploy.sh");
                 echo "stage successfully!"
             }
         }

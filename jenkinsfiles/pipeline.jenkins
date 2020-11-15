@@ -15,8 +15,10 @@ pipeline {
     }
     stages {
         stage("maven create war-package...") {
-            sh 'mvn clean package'
-            echo "successfully!"
+            steps {
+                sh 'mvn clean package'
+                echo "successfully!"
+            }
         }
         stage("Jenkins deploy war-package to tomcat...") {
             environment {
@@ -27,9 +29,10 @@ pipeline {
                 TOMCAT_PORT = '8080'
                 CONTEX_NAME = 'home'
             }
-
-            sh("deploy.sh")
-            echo "successfully!"
+            steps {
+                sh("deploy.sh")
+                echo "successfully!"
+            }
         }
     }
 }

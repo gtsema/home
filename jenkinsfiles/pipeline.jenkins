@@ -31,12 +31,12 @@ pipeline {
             }
             steps {
                 sh'''
-                echo TOMCAT_USER
-                echo TOMCAT_PASSWORD
-                echo WAR_PATH
-                echo TOMCAT_HOST
-                echo TOMCAT_PORT
-                echo CONTEX_NAME
+                echo $TOMCAT_USER
+                echo $TOMCAT_PASSWORD
+                echo $WAR_PATH
+                echo $TOMCAT_HOST
+                echo $TOMCAT_PORT
+                echo $CONTEX_NAME
                 '''
                 echo "successfully!"
             }

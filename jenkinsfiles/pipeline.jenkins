@@ -30,7 +30,14 @@ pipeline {
                 CONTEX_NAME = 'home'
             }
             steps {
-                sh("deploy.sh")
+                sh'''
+                echo TOMCAT_USER
+                echo TOMCAT_PASSWORD
+                echo WAR_PATH
+                echo TOMCAT_HOST
+                echo TOMCAT_PORT
+                echo CONTEX_NAME
+                '''
                 echo "successfully!"
             }
         }

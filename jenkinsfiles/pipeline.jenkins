@@ -14,36 +14,22 @@ pipeline {
         timestamps()
     }
     stages {
-
-        env.TOMCAT_USER = 'war-deployer'
-        env.TOMCAT_PASSWORD = 'jenkins-tomcat-deploy'
-        env.WAR_PATH = '/var/lib/jenkins/workspace/home-deploy-tomcat/target/home.war'
-        env.TOMCAT_HOST = 'http://localhost'
-        env.TOMCAT_PORT = '8080'
-        env.CONTEX_NAME = 'home'
-
-        stage("First step") {
-            steps {
-                sh 'vcgencmd measure_temp'
-            }
+        stage("maven create war-package...") {
+            sh 'mvn clean package'
+            echo "successfully!"
         }
-        stage("Second step") {
-            steps {
-                sh 'mvn clean package'
+        stage("Jenkins deploy war-package to tomcat...") {
+            environment {
+                TOMCAT_USER = 'war-deployer'
+                TOMCAT_PASSWORD = 'jenkins-tomcat-deploy'
+                WAR_PATH = '/var/lib/jenkins/workspace/home-deploy-tomcat/target/home.war'
+                TOMCAT_HOST = 'http://localhost'
+                TOMCAT_PORT = '8080'
+                CONTEX_NAME = 'home'
             }
-        }
-        stage("Third step") {
-            steps {
-                sh(returnStdout: false, script: "CURL_RESPONSE=\$(curl -v -u $TOMCAT_USER:$TOMCAT_PASSWORD -T $WAR_PATH \"http://$TOMCAT_HOST:$TOMCAT_PORT/manager/text/deploy?path=/$CONTEX_NAME&update=true\")    \n" +
-                                        "\n" +
-                                        "if [[ $CURL_RESPONSE == *\"FAIL\"* ]]; then\n" +
-                                        "  echo \"war deployment failed\"\n" +
-                                        "  exit 1\n" +
-                                        "else    \n" +
-                                        "  echo \"war deployed successfully \"\n" +
-                                        "  exit 0\n" +
-                                        "fi")
-            }
+
+            sh("deploy.sh")
+            echo "successfully!"
         }
     }
 }

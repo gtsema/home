@@ -24,13 +24,13 @@ pipeline {
             environment {
                 TOMCAT_USER = 'war-deployer'
                 TOMCAT_PASSWORD = 'jenkins-tomcat-deploy'
-                WAR_PATH = '/var/lib/jenkins/workspace/home-deploy-tomcat/target/home.war'
+                WAR_PATH = '${env.WORKSPACE}/target/home.war'
                 TOMCAT_HOST = 'http://localhost'
                 TOMCAT_PORT = '8080'
-                CONTEX_NAME = 'home'
+                CONTEX_NAME = 'ROOT'
             }
             steps {
-                sh "chmod +x -R ${env.WORKSPACE}"
+                sh "chmod +x -R ${env.WORKSPACE}/jenkinsfiles"
                 sh("jenkinsfiles/deploy.sh");
                 echo "stage successfully!"
             }

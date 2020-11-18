@@ -25,7 +25,7 @@ pipeline {
                 TOMCAT_USER = 'war-deployer'
                 TOMCAT_PASSWORD = 'jenkins-tomcat-deploy'
                 WAR_PATH = "${env.WORKSPACE}/target/home.war"
-                TOMCAT_HOST = 'http://localhost'
+                TOMCAT_HOST = 'localhost'
                 TOMCAT_PORT = '8080'
                 CONTEX_NAME = 'ROOT'
             }

@@ -28,16 +28,26 @@ pipeline {
                 echo "stage successfully!"
             }
         }
-        stage("Undeploy webapp...") {
+        stage("Changes in access rights for scripts...") {
             steps {
                 sh "chmod +x -R ${env.WORKSPACE}/jenkinsfiles"
+                echo "stage successfully!"
+            }
+        }
+        stage("Undeploy webapp...") {
+            steps {
                 sh("jenkinsfiles/undeploy.sh");
+                echo "stage successfully!"
+            }
+        }
+        stage("Rename the target file...") {   
+            steps {
+                sh "mv ${env.WORKSPACE}/target/home.war $WAR_PATH"
                 echo "stage successfully!"
             }
         }
         stage("Deploy webapp...") {   
             steps {
-                sh "mv ${env.WORKSPACE}/target/home.war $WAR_PATH"
                 sh("jenkinsfiles/deploy.sh");
                 echo "stage successfully!"
             }

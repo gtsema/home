@@ -30,13 +30,13 @@ pipeline {
         }
         stage("Undeploy webapp...") {
             steps {
+                sh "chmod +x -R ${env.WORKSPACE}/jenkinsfiles"
                 sh("jenkinsfiles/undeploy.sh");
                 echo "stage successfully!"
             }
         }
         stage("Deploy webapp...") {   
             steps {
-                sh "chmod +x -R ${env.WORKSPACE}/jenkinsfiles"
                 sh "mv ${env.WORKSPACE}/target/home.war $WAR_PATH"
                 sh("jenkinsfiles/deploy.sh");
                 echo "stage successfully!"

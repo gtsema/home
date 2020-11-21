@@ -4,8 +4,8 @@ CURL_RESPONSE=$(curl -u $TOMCAT_USER:$TOMCAT_PASSWORD http://$TOMCAT_HOST:$TOMCA
 
 if [[ $CURL_RESPONSE == *OK* ]]; then
   echo "war undeployed successfully"
-  exit 1
+  exit 0
 else
-  echo "war deployment failed"
+  echo "war undeployment failed"
   exit 1
 fi;

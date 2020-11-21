@@ -3,9 +3,17 @@
 properties([disableConcurrentBuilds()])
 
 pipeline {
+    environment {
+        TOMCAT_USER = 'deploy'
+        TOMCAT_PASSWORD = 'jendeploy'
+        WAR_PATH = "${env.WORKSPACE}/target/ROOT.war"
+        TOMCAT_HOST = 'localhost'
+        TOMCAT_PORT = '8080'
+        CONTEX_NAME = 'ROOT'
+    }
     agent {
         label 'master'
-        }
+    }
     triggers {
         pollSCM('0 * * * *')
     }
@@ -14,14 +22,6 @@ pipeline {
         timestamps()
     }
     stages {
-        environment {
-            TOMCAT_USER = 'deploy'
-            TOMCAT_PASSWORD = 'jendeploy'
-            WAR_PATH = "${env.WORKSPACE}/target/ROOT.war"
-            TOMCAT_HOST = 'localhost'
-            TOMCAT_PORT = '8080'
-            CONTEX_NAME = 'ROOT'
-        }
         stage("maven: create war-package...") {
             steps {
                 sh 'mvn clean package'

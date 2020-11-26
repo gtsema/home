@@ -7,7 +7,7 @@ pipeline {
     
     environment {
         TOMCAT_USER = "deploy"
-        TOMCAT_PASSWORDhttp://192.168.0.5:8088 = "jendeploy"
+        TOMCAT_PASSWORD = "jendeploy"
         TARGET_PATH = "${env.WORKSPACE}/target/home.war"
         WAR_PATH = "${env.WORKSPACE}/target/ROOT.war"
         BACKUP_PATH = "${env.WORKSPACE}/../backups/ROOT.war"

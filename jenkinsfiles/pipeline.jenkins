@@ -43,7 +43,7 @@ pipeline {
                     )
                 }
                 
-                echo "war file is ${RESPONSE}.trim() to root."
+                echo "war file is ($RESPONSE).trim() to root."
             }
         }
         stage("Undeploy webapp...") {

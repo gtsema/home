@@ -76,11 +76,15 @@ pipeline {
         }
         stage("Backup") {
             when { equals expected: "deployed\n", actual: RESPONCE }
-            sh "cp -f $WAR_PATH $BACKUP_PATH"
+            steps {
+                sh "cp -f $WAR_PATH $BACKUP_PATH"
+            }
         }
         stage("Roll back") {
             when { equals expected: "undeployed\n", actual: RESPONCE }
-            sh "cp -f $BACKUP_PATH $WAR_PATH"
+            steps {
+                sh "cp -f $BACKUP_PATH $WAR_PATH"
+            }
         }
     }
 }

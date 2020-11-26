@@ -32,13 +32,15 @@ pipeline {
         stage("Changes in access rights for scripts...") {
             steps {
                 sh "chmod +x -R ${env.WORKSPACE}/jenkinsfiles"
+                
+                sh "ls"
             }
         }
         stage("Check deploy to root...") {
             steps {
                 script {
                     RESPONSE = sh (
-                        script: "jenkinsfiles/checkDeploying.sh",
+                        script: "checkDeploying.sh",
                         returnStdout: true
                     )
                 }

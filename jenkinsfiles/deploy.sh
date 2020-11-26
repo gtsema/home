@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CURL_RESPONSE=$(curl -u $TOMCAT_USER:$TOMCAT_PASSWORD -T $1 http://$TOMCAT_HOST:$TOMCAT_PORT/manager/text/deploy?path=/$CONTEX_NAME&update=true)
+CURL_RESPONSE=$(curl -u $1:$2 -T $1 http://$TOMCAT_HOST:$TOMCAT_PORT/manager/text/deploy?path=/$CONTEX_NAME&update=true)
 
 if [[ $CURL_RESPONSE == *OK* ]]; then
   echo "war deployed successfully"

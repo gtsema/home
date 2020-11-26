@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 CURL_RESPONSE=$(curl -u $TOMCAT_USER:$TOMCAT_PASSWORD http://$TOMCAT_HOST:$TOMCAT_PORT/manager/text/list)

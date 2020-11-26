@@ -6,8 +6,6 @@ pipeline {
     agent any
     
     environment {
-        TOMCAT_USER = "deploy"
-        TOMCAT_PASSWORD = "jendeploy"
         TARGET_PATH = "${env.WORKSPACE}/target/home.war"
         WAR_PATH = "${env.WORKSPACE}/target/ROOT.war"
         BACKUP_PATH = "${env.WORKSPACE}/../backups/ROOT.war"
@@ -36,20 +34,23 @@ pipeline {
         }
         stage("Check deploy to root...") {
             steps {
-                script {
-                    RESPONSE = sh (
-                        script: "jenkinsfiles/checkDeploying.sh",
-                        returnStdout: true
-                    )
+                withCredentials([usernamePassword(credentialsId: 'tomcat_deploy', usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASSWORD')]) {
+                    script {
+                        RESPONSE = sh (
+                            script: "jenkinsfiles/checkDeploying.sh",
+                            returnStdout: true
+                        )
+                    }
                 }
-                
                 echo "war file is ${RESPONSE.trim()} to root."
             }
         }
         stage("Undeploy webapp...") {
             when { equals expected: "deployed\n", actual: RESPONSE }
             steps {
-                sh("jenkinsfiles/undeploy.sh");
+                withCredentials([usernamePassword(credentialsId: 'tomcat_deploy', usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASSWORD')]) {
+                    sh("jenkinsfiles/undeploy.sh");
+                }
             }
         }
         stage("Rename the target file...") {
@@ -59,18 +60,21 @@ pipeline {
         }
         stage("Deploy webapp...") {
             steps {
-                sh("jenkinsfiles/deploy.sh $WAR_PATH");
+                withCredentials([usernamePassword(credentialsId: 'tomcat_deploy', usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASSWORD')]) {
+                    sh("jenkinsfiles/deploy.sh $WAR_PATH");
+                }
             }
         }
         stage("Check deploying to root...") {
             steps {
-                script {
-                    RESPONSE = sh (
-                        script: "jenkinsfiles/checkDeploying.sh",
-                        returnStdout: true
-                    )
+                withCredentials([usernamePassword(credentialsId: 'tomcat_deploy', usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASSWORD')]) {
+                    script {
+                        RESPONSE = sh (
+                            script: "jenkinsfiles/checkDeploying.sh",
+                            returnStdout: true
+                        )
+                    }
                 }
-                
                 echo "war file is ${RESPONSE.trim()} to root."
             }
         }
@@ -83,7 +87,9 @@ pipeline {
         stage("Roll back") {
             when { equals expected: "undeployed\n", actual: RESPONSE }
             steps {
-                sh("jenkinsfiles/deploy.sh $BACKUP_PATH");
+                withCredentials([usernamePassword(credentialsId: 'tomcat_deploy', usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASSWORD')]) {
+                    sh("jenkinsfiles/deploy.sh $BACKUP_PATH");
+                }
             }
         }
     }

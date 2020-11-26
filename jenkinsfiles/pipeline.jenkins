@@ -33,14 +33,14 @@ pipeline {
             steps {
                 sh "chmod +x -R ${env.WORKSPACE}/jenkinsfiles"
                 
-                sh "ls"
+                sh "ls jenkinsfiles/"
             }
         }
         stage("Check deploy to root...") {
             steps {
                 script {
                     RESPONSE = sh (
-                        script: "checkDeploying.sh",
+                        script: "jenkinsfiles/checkDeploying.sh",
                         returnStdout: true
                     )
                 }

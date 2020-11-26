@@ -59,7 +59,7 @@ pipeline {
         }
         stage("Deploy webapp...") {
             steps {
-                sh("jenkinsfiles/deploy.sh");
+                sh("jenkinsfiles/deploy.sh $WAR_PATH");
             }
         }
         stage("Check deploying to root...") {
@@ -83,7 +83,7 @@ pipeline {
         stage("Roll back") {
             when { equals expected: "undeployed\n", actual: RESPONSE }
             steps {
-                sh "cp -f $BACKUP_PATH $WAR_PATH"
+                sh("jenkinsfiles/deploy.sh $BACKUP_PATH");
             }
         }
     }

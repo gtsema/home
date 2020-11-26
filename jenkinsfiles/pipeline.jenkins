@@ -43,7 +43,7 @@ pipeline {
                     )
                 }
                 
-                echo "war file is $RESPONCE to root."
+                echo "war file is " + RESPONCE + " to root."
             }
         }
         stage("Undeploy webapp...") {

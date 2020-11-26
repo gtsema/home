@@ -36,10 +36,12 @@ pipeline {
         }
         stage("Check deploy to root...") {
             steps {
-                RESPONSE = sh (
-                    script: "jenkinsfiles/checkDeploying.sh",
-                    returnStdout: true
-                )
+                script {
+                    RESPONSE = sh (
+                        script: "jenkinsfiles/checkDeploying.sh",
+                        returnStdout: true
+                    )
+                }
                 
                 echo "war file is $RESPONCE to root."
             }
@@ -62,10 +64,12 @@ pipeline {
         }
         stage("Check deploying to root...") {
             steps {
-                RESPONSE = sh (
-                    script: "jenkinsfiles/checkDeploying.sh",
-                    returnStdout: true
-                )
+                script {
+                    RESPONSE = sh (
+                        script: "jenkinsfiles/checkDeploying.sh",
+                        returnStdout: true
+                    )
+                }
                 
                 echo "war file is $RESPONCE to root."
             }

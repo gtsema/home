@@ -1,27 +1,58 @@
 let ctx = document.getElementById('chart').getContext('2d');
 
-let data = {
-        labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
-        datasets: [{
-            data: [86,114,106,106,107,111,133,221,783,2478],
-            label: "Africa",
-            borderColor: "#3e95cd",
-            fill: false
-        }]
-};
+let url = '/api/temperature';
+let x_data = [];
+let y_data = [];
 
-let options = {
+fetch(url).then(responce => responce.json())
+          .then(json => {
+              for (i in json) {
+                  x_data.push(new Date(json[i].date).toLocaleString("ru", { hour: 'numeric',
+                                                                            minute: 'numeric' }));
+                  y_data.push(json[i].measure);
+              }
+          });
+
+let myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: x_data,
+        datasets: [{
+            label: "жопа",
+            data: y_data
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        title: {
+            display: true,
+            text: 'Коты это круто'
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+        },
+//        hover: {
+//            mode: 'nearest',
+//            intersect: true
+//        },
         scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true
+                }
+            }],
             yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true
+                },
                 ticks: {
                     beginAtZero: true
                 }
             }]
         }
-};
-
-let myChart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: options
+    }
 });

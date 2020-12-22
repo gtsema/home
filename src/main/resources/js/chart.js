@@ -50,7 +50,7 @@ fetch(url).then(responce => responce.json())
                   data.push({ date, value });
               }
               return data;
-              })
+          })
           .then((data) => {
               let myChart = new Chart(ctx, getConfig(data));
           });

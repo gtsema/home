@@ -3,7 +3,6 @@
 
         <span class="navbar-brand">
             <img src="/img/logo.jpg" alt="" width="30" height="30" class="d-inline-block align-top">
-            Sweater
         </span>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
